@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  # Configuração do seu Backend
+  server:
+    build: ./server
+    ports:
+      - "3000:3000" # Porta que o backend vai rodar
+
+  # Configuração do seu Frontend
+  client:
+    build: ./client
+    ports:
+      - "5173:5173" # Porta que o frontend vai rodar
+    depends_on:
+      - server      # Garante que o frontend só inicie depois do backend
