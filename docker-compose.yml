@@ -1,16 +1,35 @@
 version: '3.8'
 
 services:
-  # Configuração do seu Backend
+  # Nosso Banco de Dados (PostgreSQL)
+  postgres:
+    image: postgres:15
+    container_name: portfolio-db
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: adminpassword
+      POSTGRES_DB: portfoliodb
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  # Configuração do seu Backend (NestJS)
   server:
     build: ./server
     ports:
-      - "3000:3000" # Porta que o backend vai rodar
+      - "3000:3000" 
+    depends_on:
+      - postgres 
 
-  # Configuração do seu Frontend
+  # Configuração do seu Frontend (Vite/React)
   client:
     build: ./client
     ports:
-      - "5173:5173" # Porta que o frontend vai rodar
+      - "5173:5173" 
     depends_on:
-      - server      # Garante que o frontend só inicie depois do backend
+      - server 
+
+# Mapeamento do HD virtual do banco de dados para não perder os dados
+volumes:
+  postgres_data:

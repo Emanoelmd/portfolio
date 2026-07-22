@@ -7,3 +7,7 @@ Dockerfile
 README.md
 dist
 build
+*.tsbuildinfo
+.agents
+.claude
+.windsurf
